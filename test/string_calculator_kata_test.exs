@@ -2,7 +2,9 @@ defmodule StringCalculatorKataTest do
   use ExUnit.Case
   doctest StringCalculatorKata
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  import StringCalculatorKata
+
+  test "sum with empty string" do
+    assert add("") == 0
   end
 end

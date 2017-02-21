@@ -4,15 +4,9 @@ defmodule StringCalculatorKata do
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> StringCalculatorKata.hello
-      :world
-
+  Calculates the sum of a number passed as an argument string
   """
-  def hello do
-    :world
+  def add("") do
+    0
   end
 end
