@@ -9,4 +9,10 @@ defmodule StringCalculatorKata do
   def add("") do
     0
   end
+
+  def add(operation) do
+    String.to_integer(operation)
+  end
+
+
 end
