@@ -26,12 +26,37 @@ defmodule StringCalculatorKataTest do
     testing("1,1,1", 3)
     testing("1", 1)
     testing("20,2", 22)
-    testing("0,2,3,4",9)
+    testing("0,2,3,4", 9)
     testing("1,2,3,4,5,6", 21)
   end
 
   test "introducing not valid numbers" do
     testing("adfasdfasd", 0)
+  end
+
+  test "sum numbers separated by colon or line breaks" do
+    testing("1,1", 2)
+    testing(
+      """
+      1
+      1
+      """, 2)
+
+    testing(
+      """
+      1
+      1
+      3
+      """, 5)
+
+    testing(
+      """
+      1,2
+      4
+      3,5,6
+      7
+      """, 28)
+
   end
 
 

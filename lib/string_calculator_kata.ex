@@ -11,7 +11,7 @@ defmodule StringCalculatorKata do
   end
 
   def add(operation) do
-    String.splitter(operation, ",")
+    String.splitter(operation, [",", "\n"])
     |> Enum.map(&check_number/1)
     |> Enum.sum
   end
@@ -22,5 +22,5 @@ defmodule StringCalculatorKata do
       {f, _} -> f
     end
   end
-  
+
 end
