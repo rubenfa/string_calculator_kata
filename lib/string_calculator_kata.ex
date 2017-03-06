@@ -11,8 +11,16 @@ defmodule StringCalculatorKata do
   end
 
   def add(operation) do
-    String.to_integer(operation)
+    String.splitter(operation, ",")
+    |> Enum.map(&check_number/1)
+    |> Enum.sum
   end
 
-
+  def check_number(n) do
+    case Float.parse(n)  do
+      :error  -> 0
+      {f, _} -> f
+    end
+  end
+  
 end
