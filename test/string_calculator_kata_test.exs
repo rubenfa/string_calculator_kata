@@ -31,32 +31,21 @@ defmodule StringCalculatorKataTest do
   end
 
   test "introducing not valid numbers" do
-    testing("adfasdfasd", 0)
+    assert_raise(RuntimeError, fn->
+      add("adfasdfasdf") end
+    )
   end
 
   test "sum numbers separated by colon or line breaks" do
     testing("1,1", 2)
-    testing(
-      """
-      1
-      1
-      """, 2)
+    testing("1\n1", 2)
+    testing("1\n1\n3",5)
+    testing("1,2\n4\n3,5,6\n7", 28)
+  end
 
-    testing(
-      """
-      1
-      1
-      3
-      """, 5)
-
-    testing(
-      """
-      1,2
-      4
-      3,5,6
-      7
-      """, 28)
-
+  test "You can introduce separator in the first element of string, and separating by \n" do
+    testing(".\n1,2,3\n3,1,2", 12)
+    testing(".\n1,2.3\n3.1,2", 12)
   end
 
 
