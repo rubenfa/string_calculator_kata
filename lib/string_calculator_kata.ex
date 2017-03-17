@@ -9,22 +9,20 @@ defmodule StringCalculatorKata do
   @doc """
   Calculates the sum of a number passed as an argument string
   """
+
+
   def add("") do
     0
   end
 
-  def add(operation) do
-    {delimiter, op } = split(operation)
-   
-    cond do      
-      is_valid_separtor(delimiter) -> start_add(op, [delimiter])
-      true -> start_add(operation)
-    end
+  def add(string_operation) do
+    string_operation
+    |> extract_delimiters
+    |> sum
   end
 
-  defp start_add(operation, separated_by \\ []) do
-   
-    String.splitter(operation, Enum.concat([@delimiters, separated_by]))
+  def sum({delimiter, string_op}) do
+    String.splitter(string_op, @delimiters ++ delimiter)
     |> Enum.map(&check_number!/1)
     |> Enum.sum
   end
@@ -36,17 +34,34 @@ defmodule StringCalculatorKata do
     end
   end
 
-  def is_valid_separtor(n) do
+  def extract_delimiters("") do
+   {[], ""}
+  end
+
+  def extract_delimiters(string_op) when length(string_op) < 2  do
+    {[], string_op}
+  end
+
+  def extract_delimiters(string_op) do
+    case String.at(string_op, 1)  do
+      "\n" -> extract(String.at(string_op,0), String.slice(string_op, 2..2000))
+      _ -> {[], string_op}
+    end    
+  end
+
+  def extract(delimiter, string_op) do
+    if is_valid_delimiter(delimiter) do
+      {[delimiter], string_op}
+    else
+     {[], delimiter <> "\n" <> string_op}
+    end
+  end
+
+  def is_valid_delimiter(n) do
     case Integer.parse(n) do
       :error -> true
       _  -> false
     end
   end
 
-  defp split(op) do
-    case String.split_at(op, 1) do
-      {delimiter, "\n" <> op} -> {delimiter, op}
-      {delimiter, op} -> {delimiter, op}
-    end
-  end
 end
