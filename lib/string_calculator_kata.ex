@@ -10,7 +10,6 @@ defmodule StringCalculatorKata do
   Calculates the sum of a number passed as an argument string
   """
 
-
   def add("") do
     0
   end
@@ -43,24 +42,10 @@ defmodule StringCalculatorKata do
   end
 
   def extract_delimiters(string_op) do
-    case String.at(string_op, 1)  do
-      "\n" -> extract(String.at(string_op,0), String.slice(string_op, 2..2000))
-      _ -> {[], string_op}
-    end    
-  end
-
-  def extract(delimiter, string_op) do
-    if is_valid_delimiter(delimiter) do
-      {[delimiter], string_op}
-    else
-     {[], delimiter <> "\n" <> string_op}
-    end
-  end
-
-  def is_valid_delimiter(n) do
-    case Integer.parse(n) do
-      :error -> true
-      _  -> false
+    #Using a regular expression for find out delimiters
+    case String.match?(string_op, ~r"\D{1}\n(\w|\W){2,}") do
+      true -> {[String.at(string_op, 0)], String.slice(string_op, 2..2500)}
+      false -> {[], string_op}
     end
   end
 
