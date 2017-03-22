@@ -65,6 +65,10 @@ defmodule StringCalculatorKataTest do
       add("-1,-2") end
     )
 
+    assert_raise(ArgumentError, "Negative numbers not allowed (-1, -22, -122)", fn->
+      add("-1,-22\n-122") end
+    )
+
 
   end
 
