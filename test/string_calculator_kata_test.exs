@@ -48,6 +48,34 @@ defmodule StringCalculatorKataTest do
     testing(".\n1,2.3\n3.1,2", 12)
   end
 
+  test "Negative numbers should raise an exception" do
+    assert test_exception("-1,2") == true
+    assert test_exception("-2,2") == true
+    assert test_exception("2,-2") == true
+    assert test_exception("2\n-2,") == true
+    assert test_exception("2\n-2,") == true
+  end
+
+  test "Negative numbers should raise an exception with message" do
+    assert_raise(ArgumentError, "Negative numbers not allowed (-1)", fn->
+      add("-1") end
+    )
+
+    assert_raise(ArgumentError, "Negative numbers not allowed (-1, -2)", fn->
+      add("-1,-2") end
+    )
+
+
+  end
+
+  defp test_exception(operation) do
+    try do
+      add(operation)
+      false
+    rescue
+      ArgumentError-> true
+    end
+  end
 
   defp testing(number, expected) do
     assert add(number) == expected
@@ -55,3 +83,4 @@ defmodule StringCalculatorKataTest do
 
 
 end
+

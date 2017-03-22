@@ -15,9 +15,23 @@ defmodule StringCalculatorKata do
   end
 
   def add(string_operation) do
-    string_operation
+    check_negative_numbers!(string_operation)
     |> extract_delimiters
     |> sum
+  end
+
+  def check_negative_numbers!(string_operation) do
+    negatives =
+      Regex.scan(~r{(-\d+)}, string_operation, [capture: :first] )
+      |> Enum.map(fn(x)-> Enum.fetch!(x, 0) end)
+      |> Enum.join(", ")
+
+    cond do
+      String.length(negatives) >= 2 ->
+        raise ArgumentError, "Negative numbers not allowed (#{negatives})"
+      true -> string_operation
+    end
+      
   end
 
   def sum({delimiter, string_op}) do
